@@ -1,29 +1,32 @@
-#include <iostream>
 #include <cmath>
-#define PI 3.1415926535897932384626433832795
-#include <fstream>
+#include "Point.h"
+#include "Line.h"
+#include "Segment.h"
+#include "Circle.h"
 
-point point::operator+(const point & b)const
+#define PI 3.1415926535897932384626433832795
+
+Point Point::operator+(const Point & b)const
     {
-        point s;
+        Point s;
         s.SetX(x+b.x);
         s.SetY(y+b.y);
         return s;
     }
 
-point  operator*(const point &a,double z)
+Point  operator*(const Point &a,double z)
     {
-        point aa;
+        Point aa;
         aa.SetX(a.x*z);
         aa.SetY(a.y*z);
         return aa;
     }
 
 
-point operator&(const line &a,const line &b)
+Point operator&(const Line &a,const Line &b)
 {
 
-    point aa,bb,cc;
+    Point aa,bb,cc;
     double u,c;
     if(fabs(a.v.GetX()*b.v.GetY()-a.v.GetY()*b.v.GetX())<0.00000000001)
     {
@@ -46,9 +49,9 @@ point operator&(const line &a,const line &b)
 }
 
 
-segment operator&(const circle &c, const line &a )
+Segment operator&(const Circle &c, const Line &a )
 {
-    segment n;
+    Segment n;
     double D,k1,k2;
     D=4*(a.GetA().GetX()*a.GetV().GetX()+a.GetA().GetY()*a.GetV().GetY()-a.GetV().GetY()*c.GetA().GetY()-a.GetV().GetX()*c.GetA().GetX())*(a.GetA().GetX()*a.GetV().GetX()+a.GetA().GetY()*a.GetV().GetY()-a.GetV().GetY()*c.GetA().GetY()-a.GetV().GetX()*c.GetA().GetX());
     D=D-4*(a.GetV().GetX()*a.GetV().GetX()+a.GetV().GetY()*a.GetV().GetY())  *  (a.GetA().GetX()*a.GetA().GetX()+a.GetA().GetY()*a.GetA().GetY()+c.GetA().GetX()*c.GetA().GetX()+c.GetA().GetY()*c.GetA().GetY()-2*a.GetA().GetX()*c.GetA().GetX()-2*a.GetA().GetY()*c.GetA().GetY()-c.GetR()*c.GetR());
@@ -78,10 +81,10 @@ segment operator&(const circle &c, const line &a )
     }
 }
 
-segment operator&(const circle& a,const circle& b)
+Segment operator&(const Circle& a,const Circle& b)
 {
-    segment A;
-    point aa,bb,j;
+    Segment A;
+    Point aa,bb,j;
     double t,h,d;
     d=sqrt((a.a.GetX()-b.a.GetX())*(a.a.GetX()-b.a.GetX()) + (a.a.GetY()-b.a.GetY())*(a.a.GetY()-b.a.GetY()));
     if (d>fabs(a.GetR()+b.GetR()))

@@ -19,16 +19,10 @@ public:
         , m_blockCount(0)
         , m_head(nullptr)
         , m_tail(nullptr)
-    {
-//        using namespace std;
-//        cout << endl << "BlockArray<T> has been created" << endl;
-    }
+    {}
 
     ~BlockArray()
     {
-        using namespace std;
-//        cout << endl << "~BlockArray<T> has been called" << endl;
-
         Block<T>* block = headBlock();
         if (!headBlock()) return;
 
@@ -39,7 +33,6 @@ public:
         }
         delete m_head->m_nextBlock;
         delete m_head;
-
     }
 
 public:
@@ -48,8 +41,8 @@ public:
         return 0 == length();
     }
 
-    int length() const                          /////����� �������? m_lenght ��� ������� � ����� ���������� ��� ��, � ������ ������
-    {
+    int length() const                          
+	{
         return m_length;
     }
 
@@ -178,7 +171,7 @@ public:
     // array.print(", ")
     // [.....], [.....], []
     // �������� � std::iostream ��� �������� �������, �������� �� delimeter
-    void print(const std::string& delimeter, std::ostream& stream =std::cout, int from =0, int to =-1) //////////???
+    void print(const std::string& delimeter, std::ostream& stream =std::cout, int from =0, int to =-1)
     {
         if (!length())                    return;
         if (from < 0 || from >= length()) return;
@@ -197,7 +190,7 @@ public:
 
     }
 
-    friend std::ostream& operator << (std::ostream& out, const BlockArray<T>& blockArray) //////////???
+    friend std::ostream& operator << (std::ostream& out, const BlockArray<T>& blockArray)
     {
         int count = 0;
         if (!blockArray.length()) return out;
@@ -275,8 +268,8 @@ protected:
         return m_tail;
     }
 
-    bool removeBlock(Block<T>* block)                           ///////////�� ������� ����� ������� ������ ���������, ���� ������ ����� ���� ������� ���-�� ���������
-    {
+    bool removeBlock(Block<T>* block)                           
+	{
         if (!block) return false;
 
         Block<T>* b = headBlock();

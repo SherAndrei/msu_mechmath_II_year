@@ -1,8 +1,9 @@
 #include <ostream>
 #include <cmath>
 #include <algorithm>
-#define delta 10e-8
+#include "Number.h"
 
+#define delta 10e-8
 
 Number Sin(Number b)
 {
