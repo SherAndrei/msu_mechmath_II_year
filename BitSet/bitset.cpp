@@ -101,7 +101,7 @@ BitSet BitSet::operator >>  (const std::size_t amount) const
 		return *this;
 	
 	BitSet result(this->_size);
-	for(int i = _size - amount - 1, j = _size - 1; i >= 0; j--, i--) {
+	for(size_t i = _size - amount - 1, j = _size - 1; i >= 0; j--, i--) {
 		result[i] = (*this)[j];
 	}
 	return result;	
@@ -190,14 +190,14 @@ bool BitSet::operator >= (const BitSet& other) const
 
 BitSet& BitSet::set()
 {
-	for(int i = 0; i < _size; i++) {
+	for(size_t i = 0; i < _size; i++) {
 		(*this)[i] = 1;
 	}
 	return *this;
 }
 BitSet& BitSet::reset()
 {
-	for(int i = 0; i < _size; i++) {
+	for(size_t i = 0; i < _size; i++) {
 		(*this)[i] = 0;
 	}
 	return *this;
@@ -212,8 +212,8 @@ size_t BitSet::capacity() const
 	return _capacity;
 } 
 BitSet::Bit::Bit(uint32_t* p_number, size_t idx)
-	: _p_num(p_number)
-	, _idx(idx)
+	: _idx(idx)
+	, _p_num(p_number)
 {}
 BitSet::Bit& BitSet::Bit::operator=(bool b)
 {
@@ -261,7 +261,7 @@ std::istream& operator >> (std::istream& is, BitSet& bs)
 	std::getline(is, bit_str);
 	size_t bit_sz = bit_str.size();
 
-	for(int i = 0; i < bit_sz; i++) {
+	for(size_t i = 0; i < bit_sz; i++) {
 		if((bit_str[i] == '0' || bit_str[i] == '1') && i < bs.size()) {
 			bs[i] = bit_str[bit_sz - i - 1] - 48;
 		}
@@ -272,7 +272,7 @@ std::istream& operator >> (std::istream& is, BitSet& bs)
 }
 std::ostream& operator << (std::ostream& os, const BitSet& bs) 
 {
-	for(int i = bs.size() - 1; i >= 0; i--) {
+	for(size_t i = bs.size() - 1; i >= 0; i--) {
 		os << bs[i];
 	}
 	return os;
