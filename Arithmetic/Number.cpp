@@ -1,6 +1,6 @@
 #include "Number.h"
-#include  < ostream>
-#include  < cmath>
+#include  <ostream>
+#include  <cmath>
 
 #define delta 10e-8
 

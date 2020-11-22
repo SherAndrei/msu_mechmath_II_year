@@ -92,8 +92,8 @@ BitSet BitSet::operator >>  (const std::size_t amount) const {
         return *this;
 
     BitSet result(this->_size);
-    for (int i = _size - amount - 1, j = _size - 1; i >= 0; j--, i--) {
-        result[i] = (*this)[j];
+    for (size_t i = _size - amount, j = _size; i > 0; j--, i--) {
+        result[i - 1] = (*this)[j - 1];
     }
     return result;
 }
@@ -146,8 +146,8 @@ bool BitSet::operator != (const BitSet& other) const {
 }
 bool BitSet::operator <  (const BitSet& other) const {
     cmp_sz(this->_size, other._size, "operator <");
-    for (int i = other._size - 1; i >= 0; i--) {
-        if ((*this)[i] ^ other[i]) return other[i];
+    for (size_t i = other._size; i > 0; i--) {
+        if ((*this)[i - 1] ^ other[i - 1]) return other[i];
     }
     return false;
 }
@@ -157,8 +157,8 @@ bool BitSet::operator <= (const BitSet& other) const {
 }
 bool BitSet::operator >  (const BitSet& other) const {
     cmp_sz(this->_size, other._size, "operator >");
-    for (int i = other._size - 1; i >= 0; i--) {
-        if ((*this)[i] ^ other[i]) return (*this)[i];
+    for (size_t i = other._size; i > 0; i--) {
+        if ((*this)[i - 1] ^ other[i - 1]) return (*this)[i];
     }
     return false;
 }
@@ -168,13 +168,13 @@ bool BitSet::operator >= (const BitSet& other) const {
 }
 
 BitSet& BitSet::set() {
-    for (int i = 0; i < _size; i++) {
+    for (size_t i = 0; i < _size; i++) {
         (*this)[i] = 1;
     }
     return *this;
 }
 BitSet& BitSet::reset() {
-    for (int i = 0; i < _size; i++) {
+    for (size_t i = 0; i < _size; i++) {
         (*this)[i] = 0;
     }
     return *this;
@@ -230,7 +230,7 @@ std::istream& operator >> (std::istream& is, BitSet& bs) {
     std::getline(is, bit_str);
     size_t bit_sz = bit_str.size();
 
-    for (int i = 0; i < bit_sz; i++) {
+    for (size_t i = 0; i < bit_sz; i++) {
         if ((bit_str[i] == '0' || bit_str[i] == '1') && i < bs.size()) {
             bs[i] = (bit_str[bit_sz - i - 1] == '1');
         } else {
@@ -240,8 +240,8 @@ std::istream& operator >> (std::istream& is, BitSet& bs) {
     return is;
 }
 std::ostream& operator << (std::ostream& os, const BitSet& bs) {
-    for (int i = bs.size() - 1; i >= 0; i--) {
-        os << bs[i];
+    for (size_t i = bs.size(); i > 0; i--) {
+        os << bs[i - 1];
     }
     return os;
 }
