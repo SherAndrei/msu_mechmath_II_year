@@ -24,7 +24,7 @@ template<class TKey, class TPayload>
 class Element
 {
 public:
-    using TNode = Node<TKey,TPayload>;
+    using TNode = Node<TKey, TPayload>;
 
 public:
     Element() : m_subtree{ nullptr }
@@ -136,7 +136,7 @@ public:
 
    ~RootLinker()
     {
-        // На всякий :)
+        // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ :)
         if (root())
         {
             int count = root()->deleteAllSubtrees();
@@ -150,7 +150,7 @@ public:
     TNode* root() const { return m_root; }
     void   setRoot(TNode* oldRoot, TNode* newRoot)
     {
-        // root должен быть всегда тем же самым, т.е. у новый узел должен быть из того же дерева.
+        // root пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅ.пїЅ. пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
         if (oldRoot != root())
             throw "Wrong old root in RootLinker::setRoot()";
         else
@@ -197,7 +197,7 @@ public:
         //    ? MAX_NODE_ELEMS
         //    : MAX_ARRAY_IN_BYTES /sizeof(TElem);
 
-        //// Слишком много/мало?
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ?
         ////if (holderSize < 3)
         //    holderSize = 3;
         
@@ -242,7 +242,7 @@ public:
             if (desiredElem > current->m_holder[current->elemCount()-1])
                 current = current->m_holder[current->elemCount()-1].subtree();
             else
-            {// Двоичный поиск по дереву
+            {// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
                 int firstPos = 1;
                 int lastPos  = current->lastElemPos();
@@ -276,7 +276,7 @@ public:
     {
         Node* lastVisitedNode = this;
 
-        // элемент уже в дереве?
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?
         TElem& found = search(elem, lastVisitedNode);
         bool is_valid = found.isValid();
         if (is_valid)
@@ -290,7 +290,7 @@ public:
 
     bool deleteElem(TElem& targetElem)
     {
-        // найдём 1й узел с targetElem.key
+        // пїЅпїЅпїЅпїЅпїЅ 1пїЅ пїЅпїЅпїЅпїЅ пїЅ targetElem.key
         Node* node = nullptr;
         TElem& found = search(targetElem, node);
         if (!found.isValid())
@@ -303,25 +303,25 @@ public:
         {
             node->deleteFromHolder(targetElem);
 
-            // Уже после первой итерации this может стать мусором.
+            // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ this пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
             while (node)
             {
                 if (node == node->findRoot() && node->isLeaf())
                     break;
 
-                // На случай, елси root попался:
+                // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ root пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
                 if (node == node->findRoot() && !node->isLeaf())
                     throw "Node should not be root in deleteElement loop.";
 
                 int thisParentIndex = INVALID_INDEX;
 
-                // Проверим правого взять ещё элементы:
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
                 Node* rightNode = node->rightSibling(thisParentIndex);
                 if (rightNode && rightNode->keyCount() > rightNode->minimumKeys())
                     node = node->rotateFromRight(thisParentIndex);
                 else
                 {
-                    // Проверим левого взять ещё элементы:
+                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
                     Node* leftNode = node->leftSibling(thisParentIndex);
                     if (leftNode && leftNode->keyCount() > leftNode->minimumKeys())
                         node = node->rotateFromLeft(thisParentIndex);
@@ -344,7 +344,7 @@ public:
         return true;
     }
 
-    // Возврат -- количество удалённых нод.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.
     int deleteAllSubtrees()
     {
         int deletedNodesNum = 0;
@@ -412,11 +412,11 @@ protected:
     bool isLeaf()  const { return m_holder[0].subtree() == nullptr; }
     bool isFull()  const { return elemCount() == m_holder.size()-1; }
 
-    // Заполнено за нулевой элемент (для split)?
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ split)?
     bool isFullX() const { return elemCount() >= m_holder.size()-1; }
 
-    // Вставка в массив/холдер элементов.
-    // Возврат: true -- удачно
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: true -- пїЅпїЅпїЅпїЅпїЅпїЅ
     bool insertToHolder(const TElem& elem)
     {
         if (isFullX())
@@ -438,8 +438,8 @@ protected:
         return true;
     }
 
-    // Вставка через нулевой элемент. Вызываеть должен только из splitInsert.
-    // Возврат true -- вставлен.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ splitInsert.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ true -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     bool insertToHolderForSplit(const TElem& elem)
     {
         if (elemCount() >= m_holder.size())
@@ -465,7 +465,7 @@ protected:
     bool splitInsert(const TElem& elem)
     {
         if (!isFull())
-            // splitInstert может быть вызван только, если нода заполнена
+            // splitInstert пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             throw "Bad count of elements in splitInsert.";
 
         insertToHolderForSplit(elem);
@@ -474,13 +474,13 @@ protected:
         if (splitPoint*2 < elemCount())
             ++splitPoint;
 
-        // Новый узел берёт праую половину.
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
         Node* newNode = new Node( root() );
 
         TElem upwardElem = m_holder[splitPoint];
         newNode->insertSubtreeToZeroPos( upwardElem.subtree() );
 
-        // Добавляем к родителю этого узла:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ:
         upwardElem.setSubtree( newNode );
 
         for (int i = 1; i < elemCount() -splitPoint; ++i)
@@ -490,14 +490,14 @@ protected:
         setElemCount( splitPoint );
         newNode->setParent( parent() );
 
-        // Добавим новый узел к родителю, возможно с разбиением:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
         if (parent() && parent()->insertToHolder(upwardElem))
             return true;
         else
         if (parent() && parent()->splitInsert(upwardElem))
             return true;
         else
-        // Это был root?
+        // пїЅпїЅпїЅ пїЅпїЅпїЅ root?
         if (!parent())
         {
             Node* newRoot = new Node( root() );
@@ -515,14 +515,14 @@ protected:
         return true;
     }
 
-    // Удаляет элем из холдера со всеми потрохами.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     bool deleteFromHolder(TElem& targetElem)
     {
         int targetPos = -1;
         int firstPos  = 1;
         int lastPos   = lastElemPos();
 
-        // Делаем двоичный поиск:
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
         while (lastPos -firstPos > 1)
         {
             int mid = firstPos +(lastPos -firstPos) /2;
@@ -540,11 +540,11 @@ protected:
         else
             return false;
 
-        // Если есть поддерево, то удаляем или присоединяем.
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
         //if (m_holder[i].subtree())
         //    delete m_holder[i].subtree();
 
-        // Но здесь просто сдвигаем вправо с позиции targetPos.
+        // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ targetPos.
         for (int i = targetPos; i < elemCount(); ++i)
             m_holder[i] = m_holder[i+1];
 
@@ -553,17 +553,17 @@ protected:
         return true;
     }
 
-    // Удаляет элемент из холдера по индексу.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     bool deleteFromHolder(int targetPos)
     {
         if (targetPos < 0 || targetPos >= elemCount()) // ??? check for isElemPosValid(): ">= m_elemCount"
             return false;
 
-        // Если есть поддерево, то удаляем или присоединяем.
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
         //if (m_holder[i].subtree())
         //    delete m_holder[i].subtree();
 
-        // Но здесь просто сдвигаем вправо с позиции targetPos.
+        // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ targetPos.
         for (int i = targetPos; i < elemCount(); ++i)
             m_holder[i] = m_holder[i+1];
 
@@ -572,7 +572,7 @@ protected:
         return true;
     }
 
-    // Вставка в нулевую позицию холдера.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     void insertSubtreeToZeroPos(Node* subtree)
     {
         m_holder[0].setSubtree(subtree);
@@ -591,7 +591,7 @@ protected:
     TElem&       smallestKey()       { return m_holder[1];             }
     const TElem& smallestKey() const { return m_holder[1];             }
 
-    // Возвращает самый маленький элемент начиная с узла и глубже.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
     TElem& smallestKeyInSubtree()
     {
         return isLeaf()
@@ -599,7 +599,7 @@ protected:
             : m_holder[0].subtree()->smallestKeyInSubtree();
     }
 
-    // Возвращает индекс элемента (позиции) в parent-е, если он указывает на эту ноду.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ) пїЅ parent-пїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
     int subtreeIndexInParent() const
     {
         if (!parent())
@@ -631,31 +631,31 @@ protected:
 public:
     Node* leftSibling (int& thisParentIndex)
     {
-        // получим свой индекс в parent()
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ parent()
         thisParentIndex = subtreeIndexInParent();
         if (thisParentIndex == INVALID_INDEX)
             return nullptr;
 
         if (thisParentIndex == 0)
-            // левого брата нет:
+            // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ:
             return nullptr;
 
-        // возврат может быть по nullptr:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ nullptr:
         return parent()->m_holder[thisParentIndex-1].subtree();
     }
 
     Node* rightSibling(int& thisParentIndex)
     {
-        // получим свой индекс в parent()
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ parent()
         thisParentIndex = subtreeIndexInParent();
         if (thisParentIndex == INVALID_INDEX)
             return nullptr;
 
         if (thisParentIndex >= parent()->elemCount()-1)
-            // правого брата нет:
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ:
             return nullptr;
 
-        // возврат может быть по nullptr:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ nullptr:
         return parent()->m_holder[thisParentIndex+1].subtree();
     }
 
@@ -665,10 +665,10 @@ public:
     {
         Node& parentRef = *parent();
 
-        // Новый элемент для добавления в узел:
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ:
         TElem underflowFiller = parentRef[thisParentIndex];
 
-        // Получим элемент слева:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
         Node& leftSibling = *parentRef[thisParentIndex-1].subtree();
 
         Node& self = *this;
@@ -679,16 +679,16 @@ public:
         if (self[0].subtree())
             self[0].subtree()->setParent( this );
 
-        // Скопируем элемент (всё):
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ):
         parentRef[thisParentIndex] = leftSibling[leftSibling.lastElemPos()];
 
-        // Восстанавливаем наш указатель:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
         self[thisParentIndex].setSubtree( this );
 
         insertToHolder(underflowFiller);
         leftSibling.deleteFromHolder(leftSibling.lastElemPos());
 
-        // ПРи этом parent ещё содержит тоже количество элементов:
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ parent пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
         return nullptr;
     }
 
@@ -696,17 +696,17 @@ public:
     {
         Node& parentRef = *parent();
 
-        // Новый элемент для добавления в узел:
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ:
         TElem underflowFiller = parentRef[thisParentIndex+1];
 
-        // Получим элемент справа:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:
         Node& rightSibling = *( parentRef[thisParentIndex+1].subtree() );
         underflowFiller.setSubtree(rightSibling[0].subtree());
 
-        // Скопируем элемент (всё):
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ):
         parentRef[thisParentIndex+1] = rightSibling[1];
 
-        // Восстанавливаем наш указатель:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
         parentRef[thisParentIndex+1].setSubtree(&rightSibling);
 
         insertToHolder(underflowFiller);
@@ -714,14 +714,14 @@ public:
 
         rightSibling[0].setByDefault();
 
-        // ПРи этом parent ещё содержит тоже количество элементов
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ parent пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         return nullptr;
     }
 
 // Merging:
 public:
-    // Копируем всё в левого и ссыль на него в родителе, а потом удаляем этот.
-    // Возврат -- ссыль на родителя.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ -- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     Node* mergeLeft(int thisParentIndex)
     {
         Node& parentRef = *parent();
@@ -737,7 +737,7 @@ public:
 
         parentRef.deleteFromHolder(thisParentIndex);
 
-        // Сохраним paretn перед удалением этого узла:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ paretn пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ:
         Node* savedParentNodePtr = parent();
 
         if (parent() == findRoot() && !parent()->keyCount())
@@ -759,15 +759,15 @@ public:
 
         delete this;
 
-        if(savedParentNodePtr->keyCount() >= savedParentNodePtr->minimumKeys())
-            // родитель больше не нужен:
+        if (savedParentNodePtr->keyCount() >= savedParentNodePtr->minimumKeys())
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
             return nullptr;
 
         return savedParentNodePtr;
     }
 
-    // Копируем всё из правого, а потом удаляем его.
-    // Возврат родитель.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     Node* mergeRight(int thisParentIndex)
     {
         Node& parentRef = *parent();
@@ -795,19 +795,19 @@ public:
             return nullptr;
 
         if (parent() && parent()->keyCount() >= parent()->minimumKeys())
-            // родитель больше не нужен:
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
             return nullptr;
 
         return parent();
     }
 
-    // Возвращает наименьшую ключ-позицию.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     int minimumKeys() const
     {
-        // Нулевой элемент не берём (нужен для разделения).
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ).
         int size = m_holder.size();
 
-        // округляем в большую сторону:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
         int ceiling_func = (size-1) /2;
 
         if (ceiling_func*2 < size-1)
@@ -854,20 +854,20 @@ protected:
 protected:
     std::vector<TElem> m_holder;
 
-    // Кол-во элементов в холдере + нулевой элемент (только для поддерева, без Elem).
+    // пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ Elem).
     int m_elemCount;
 
     Node* m_parent;
 
-    // Элемент для указания плохого поиска и т.п.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ.пїЅ.
     static TElem FailuredElem;
 
-    // Оболочка для корневого элемента. Нужна, чтобы не потерять его в процессе удаления узлов.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     TRootLinker& m_root;
 };
 
 
-// Элемент для указания плохого поиска и т.п.
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ.пїЅ.
 template <class TKey, class TPayload>
 Element <TKey, TPayload>    Node <TKey, TPayload>::FailuredElem = Element<TKey, TPayload>::createFailuredElem();
 
@@ -895,7 +895,7 @@ void Node<TKey,TPayload>::print()
 
 
 //
-// Внизу -- для удобной отладки.
+// пїЅпїЅпїЅпїЅпїЅ -- пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 //
 template <class TKey, class TPayload>
 int Node<TKey, TPayload>::treeHeight(int& currentHeight) const

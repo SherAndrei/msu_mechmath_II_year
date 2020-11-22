@@ -33,7 +33,7 @@ void Circle::Printcircle(FILE*f)
 	int i;
 	s.setpoint(r,0,1);
 	yy=2*PI/1000;
-	for(i=1;i<1001;i++)
+	for (i=1;i<1001;i++)
 	{
 		s.setpoint (a.GetX()+r*cos(yy*i),a.GetY()+r*sin(yy*i),1 );
 		fprintf(f,"%lf ",s.GetX());

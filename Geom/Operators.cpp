@@ -28,7 +28,7 @@ Point operator&(const Line &a,const Line &b)
 
     Point aa,bb,cc;
     double u,c;
-    if(fabs(a.v.GetX()*b.v.GetY()-a.v.GetY()*b.v.GetX())<0.00000000001)
+    if (fabs(a.v.GetX()*b.v.GetY()-a.v.GetY()*b.v.GetX())<0.00000000001)
     {
 
         aa= a.v;
@@ -55,14 +55,14 @@ Segment operator&(const Circle &c, const Line &a )
     double D,k1,k2;
     D=4*(a.GetA().GetX()*a.GetV().GetX()+a.GetA().GetY()*a.GetV().GetY()-a.GetV().GetY()*c.GetA().GetY()-a.GetV().GetX()*c.GetA().GetX())*(a.GetA().GetX()*a.GetV().GetX()+a.GetA().GetY()*a.GetV().GetY()-a.GetV().GetY()*c.GetA().GetY()-a.GetV().GetX()*c.GetA().GetX());
     D=D-4*(a.GetV().GetX()*a.GetV().GetX()+a.GetV().GetY()*a.GetV().GetY())  *  (a.GetA().GetX()*a.GetA().GetX()+a.GetA().GetY()*a.GetA().GetY()+c.GetA().GetX()*c.GetA().GetX()+c.GetA().GetY()*c.GetA().GetY()-2*a.GetA().GetX()*c.GetA().GetX()-2*a.GetA().GetY()*c.GetA().GetY()-c.GetR()*c.GetR());
-    if(D<0)
+    if (D<0)
     {
         n.SetZ(-1);
         return n;
     }
     else
     {
-        if(D>0)
+        if (D>0)
         {
 
             k1= ((-1)* 2*(a.GetA().GetX()*a.GetV().GetX()+a.GetA().GetY()*a.GetV().GetY()-a.GetV().GetY()*c.GetA().GetY()-a.GetV().GetX()*c.GetA().GetX())+sqrt(D))/(2*(a.GetV().GetX()*a.GetV().GetX()+a.GetV().GetY()*a.GetV().GetY()));
