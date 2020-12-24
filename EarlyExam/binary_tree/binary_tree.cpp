@@ -67,33 +67,37 @@ void BinaryTree::Print() const {
 
 namespace {
 
-static int sumNumbers(TreeNode* pos, int level) {
-    int result = 0;
+int globalSum = 0;
+
+void sumNumbers(TreeNode* pos, int level, int last_result) {
+    int result = pos->value * std::pow(10, level) + last_result;
     if (pos->left != nullptr) {
-        result += sumNumbers(pos->left, level + 1);
+        sumNumbers(pos->left, level + 1, result);
     }
     if (pos->right != nullptr) {
-        result += sumNumbers(pos->right, level + 1);
+        sumNumbers(pos->right, level + 1, result);
     }
-    return ((pos->right != nullptr) + (pos->left != nullptr)
-          + (pos->left == nullptr && pos->right == nullptr))
-          * pos->value * (std::pow(10, level)) + result;
+    if (pos->left == nullptr && pos->right == nullptr) {
+        globalSum += result;
+    }
 }
 
 }  // namespace
 
 int SumNumbers(TreeNode* root) {
-    int result = 0;
+    globalSum = 0;
+
     if (root->left != nullptr) {
-        result += sumNumbers(root->left, 1);
+        sumNumbers(root->left, 1, root->value);
     }
     if (root->right != nullptr) {
-        result += sumNumbers(root->right, 1);
+        sumNumbers(root->right, 1, root->value);
+    }
+    if (root->left == nullptr && root->right == nullptr) {
+        globalSum += root->value;
     }
 
-    return ((root->right != nullptr) + (root->left != nullptr)
-          + (root->left == nullptr && root->right == nullptr))
-          * root->value + result;
+    return globalSum;
 }
 
 
