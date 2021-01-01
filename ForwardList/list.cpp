@@ -40,15 +40,23 @@ ListNode* const List::head() const {
 ListNode* DetectCycle(ListNode* head) {
     ListNode *slow = head, *fast = head;
     while (slow != nullptr &&
-           fast != nullptr &&
-           fast->next != nullptr) {
+            fast != nullptr &&
+            fast->next != nullptr) {
         slow = slow->next;
         fast = fast->next->next;
-        if (slow == fast) {
-            return slow;
-        }
+        if (fast == slow)
+            break;
     }
-    return nullptr;
+    if (fast != slow    ||
+        fast == nullptr ||
+        fast->next == nullptr)
+        return nullptr;
+    slow = head;
+    while (slow != fast) {
+        fast = fast->next;
+        slow = slow->next;
+    }
+    return slow;
 }
 
 std::istream& operator>>(std::istream& is, List& l) {
