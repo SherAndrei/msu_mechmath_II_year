@@ -3,9 +3,15 @@
 #include <iostream>
 
 struct ListNode {
+ public:
     explicit ListNode(int val);
     ~ListNode();
 
+ private:
+    ListNode(const ListNode& other) = delete;
+    ListNode& operator=(const ListNode& other) = delete;
+
+ public:
     int value;
     ListNode* next;
 };
@@ -15,13 +21,23 @@ class List {
     List();
     ~List();
 
-    void PushFront(int);
-    bool RemoveFront();
+ private:
+    List(const List& other) = delete;
+    List& operator=(const List& other) = delete;
 
+ public:
+    void PushFront(int);
+    void RemoveFront();
+
+ public:
     ListNode* head();
-    ListNode* const head() const;
+    const ListNode* head() const;
+
+    size_t size() const;
+
  private:
     ListNode* head_;
+    size_t size_;
 };
 
 ListNode* DetectCycle(ListNode* head);

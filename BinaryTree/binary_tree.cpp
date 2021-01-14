@@ -67,37 +67,40 @@ void BinaryTree::Print() const {
 
 namespace {
 
-int globalSum = 0;
+struct Solver {
+    void sumNumbers(TreeNode* pos, int level, int last_result) {
+        int result = pos->value * static_cast<int>(std::pow(10, level))
+                   + last_result;
+        if (pos->left != nullptr) {
+            sumNumbers(pos->left, level + 1, result);
+        }
+        if (pos->right != nullptr) {
+            sumNumbers(pos->right, level + 1, result);
+        }
+        if (pos->left == nullptr && pos->right == nullptr) {
+            sum_ += result;
+        }
+    }
 
-void sumNumbers(TreeNode* pos, int level, int last_result) {
-    int result = pos->value * std::pow(10, level) + last_result;
-    if (pos->left != nullptr) {
-        sumNumbers(pos->left, level + 1, result);
-    }
-    if (pos->right != nullptr) {
-        sumNumbers(pos->right, level + 1, result);
-    }
-    if (pos->left == nullptr && pos->right == nullptr) {
-        globalSum += result;
-    }
-}
+    int sum_ = 0;
+};
 
 }  // namespace
 
 int SumNumbers(TreeNode* root) {
-    globalSum = 0;
+    Solver s;
 
     if (root->left != nullptr) {
-        sumNumbers(root->left, 1, root->value);
+        s.sumNumbers(root->left, 1, root->value);
     }
     if (root->right != nullptr) {
-        sumNumbers(root->right, 1, root->value);
+        s.sumNumbers(root->right, 1, root->value);
     }
     if (root->left == nullptr && root->right == nullptr) {
-        globalSum += root->value;
+        s.sum_ += root->value;
     }
 
-    return globalSum;
+    return s.sum_;
 }
 
 

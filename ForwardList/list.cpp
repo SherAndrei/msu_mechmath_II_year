@@ -8,55 +8,54 @@ ListNode::~ListNode() {
 }
 
 List::List()
-    : head_{nullptr} {}
+    : head_{nullptr}, size_(0ul) {}
 
 List::~List() {
-    while (RemoveFront()) {}
+    while (size_ > 0ul) {
+        RemoveFront();
+    }
 }
 
 void List::PushFront(int value) {
-    ListNode* new_n = new ListNode(value);
-    new_n->next = head_;
-    head_ = new_n;
+    ListNode* temp = new ListNode(value);
+    temp->next = head_;
+    head_ = temp;
+    size_++;
 }
 
-bool List::RemoveFront() {
-    if (head_ == nullptr)
-        return false;
-    ListNode* pos = head_;
-    head_ = head_->next;
-    delete pos;
-    return true;
+void List::RemoveFront() {
+    if (head_) {
+        ListNode* temp = head_->next;
+        delete head_;
+        head_ = temp;
+        size_--;
+    }
 }
 
 ListNode* List::head() {
     return head_;
 }
 
-ListNode* const List::head() const {
+const ListNode* List::head() const {
     return head_;
+}
+
+size_t List::size() const {
+    return size_;
 }
 
 ListNode* DetectCycle(ListNode* head) {
     ListNode *slow = head, *fast = head;
     while (slow != nullptr &&
-            fast != nullptr &&
-            fast->next != nullptr) {
+           fast != nullptr &&
+           fast->next != nullptr) {
         slow = slow->next;
         fast = fast->next->next;
-        if (fast == slow)
-            break;
+        if (slow == fast) {
+            return slow;
+        }
     }
-    if (fast != slow    ||
-        fast == nullptr ||
-        fast->next == nullptr)
-        return nullptr;
-    slow = head;
-    while (slow != fast) {
-        fast = fast->next;
-        slow = slow->next;
-    }
-    return slow;
+    return nullptr;
 }
 
 std::istream& operator>>(std::istream& is, List& l) {
@@ -68,7 +67,7 @@ std::istream& operator>>(std::istream& is, List& l) {
 }
 
 std::ostream& operator<<(std::ostream& os, const List& l) {
-    for (ListNode* cur = l.head(); cur != nullptr; cur = cur->next) {
+    for (auto cur = l.head(); cur != nullptr; cur = cur->next) {
         os << cur->value << (cur->next != nullptr ? " -> " : "\n");
     }
     return os;
